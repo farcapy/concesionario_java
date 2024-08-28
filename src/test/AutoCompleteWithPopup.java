@@ -123,7 +123,7 @@ public class AutoCompleteWithPopup extends JFrame {
 
         try {
             // Conectar a la base de datos
-            connection = conectar.conectarMySQL(); // Implementa tu método de conexión aquí
+            connection = conectar.connMySQL(); // Implementa tu método de conexión aquí
             String sql = "SELECT DISTINCT marca FROM vehiculos WHERE marca LIKE ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, input + "%");

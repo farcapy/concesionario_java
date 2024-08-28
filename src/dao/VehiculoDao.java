@@ -1,6 +1,7 @@
 package dao;
 
 import com.mysql.cj.util.StringUtils;
+import conn.Conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,39 +17,13 @@ import model.Vehiculo;
 
 public class VehiculoDao {
 
-    //Libreria MySQL
-    public String driver = "com.mysql.cj.jdbc.Driver";
-    //Nombre de la base de datos
-    public String database = "concesionario_test";
-    //Host
-    public String hostname = "localhost";
-    //Puerto
-    public String port = "3306";
-    //Ruta de nuestra base de datos (desactivamos el uso de SSl con ?useSSL=false
-    public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";
-    //Usuario
-    public String username = "root";
-    //Password
-    public String password = "root1234";
-
-    public Connection conectarMySQL() {
-        Connection conn = null;
-
-        try {
-            Class.forName(driver);
-            conn = (Connection) DriverManager.getConnection(url, username, password);
-            System.out.println("Conectado a la base de datos");
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
+    Conexion connBD = new Conexion();
 
     public int probarConexion() {
         int cantidadVehiculos = 0;
         String sql = "SELECT COUNT(*) AS total FROM vehiculos;";
 
-        try (Connection conexion = conectarMySQL();
+        try (Connection conexion = connBD.connMySQL();
                 Statement statement = conexion.createStatement();
                 ResultSet resultado = statement.executeQuery(sql)) {
 
@@ -66,7 +41,7 @@ public class VehiculoDao {
                 + "`year_fab`, `precio`, `color`, `tipo_motor`, `transmision`, `km`, `ubicacion`, `estado`, `descripcion`)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-        try (Connection conexion = conectarMySQL();
+        try (Connection conexion = connBD.connMySQL();
                 PreparedStatement statement = conexion.prepareStatement(sql)) {
 
             statement.setString(1, v.getMatricula());
@@ -98,7 +73,7 @@ public class VehiculoDao {
                 + "`ubicacion` = ?, `estado` = ?, `descripcion` = ? "
                 + "WHERE `id_vehiculo` = ?;";
 
-        try (Connection conexion = conectarMySQL();
+        try (Connection conexion = connBD.connMySQL();
                 PreparedStatement statement = conexion.prepareStatement(sql)) {
 
             // Establecer los valores en la consulta
@@ -131,7 +106,7 @@ public class VehiculoDao {
     public void eliminarVehiculo(String id) {
         try {
             Statement statement = null;
-            Connection conexion = conectarMySQL();
+            Connection conexion = connBD.connMySQL();
             //DELETE FROM `concesionario_test`.`vehiculos` WHERE (`id_vehiculo` = '1');
             String sql = "DELETE FROM vehiculos WHERE id_vehiculo = " + id;
             statement = conexion.createStatement();
@@ -145,7 +120,7 @@ public class VehiculoDao {
         List<Vehiculo> listado = new ArrayList<>();
         String sql = "SELECT * FROM vehiculos;";
 
-        try (Connection conexion = conectarMySQL();
+        try (Connection conexion = connBD.connMySQL();
                 Statement statement = conexion.createStatement();
                 ResultSet resultado = statement.executeQuery(sql)) {
 
@@ -180,8 +155,24 @@ public class VehiculoDao {
         }
     }
     
-    
+    public int obtenerUltimoID() {
+    int ultimoID = 0;
+    String query = "SELECT MAX(id_vehiculo) FROM vehiculos"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.
 
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario_test", "root", "root1234");
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+
+        if (rs.next()) {
+            ultimoID = rs.getInt(1); // Obtén el último ID
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return ultimoID + 1; // Devuelve el siguiente ID
+}       
 //    public static void main(String[] args) {
 //        VehiculoDao dao = new VehiculoDao();
 //        int cantidad = dao.probarConexion();

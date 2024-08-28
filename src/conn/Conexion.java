@@ -25,7 +25,7 @@ public class Conexion {
     //Password
     public String password = "root1234";
 
-    public Connection conectarMySQL() {
+    public Connection connMySQL() {
         Connection conn = null;
 
         try {
@@ -42,7 +42,7 @@ public class Conexion {
         int cantidadVehiculos = 0;
         String sql = "SELECT COUNT(*) AS total FROM vehiculos;";
 
-        try (Connection conexion = conectarMySQL();
+        try (Connection conexion = connMySQL();
                 Statement statement = conexion.createStatement();
                 ResultSet resultado = statement.executeQuery(sql)) {
 
