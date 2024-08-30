@@ -465,6 +465,7 @@ public class FormVehiculo extends javax.swing.JFrame {
         this.lbId.setText("N/A");
         deshabilitarCampos();
         deshabilitarBotones();
+        btnNuevo.requestFocus();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
@@ -482,10 +483,6 @@ public class FormVehiculo extends javax.swing.JFrame {
         v.setUbicacion((String) cbUbicacion.getSelectedItem());
         v.setEstado((String) cbEstado.getSelectedItem());
         v.setDescripcion(txtDescri.getText());
-
-//        if (StringUtils.isEmptyOrWhitespaceOnly(lbId.getText())) {
-//            
-//        }
 
         vehiculoDao.guardar(v);
 

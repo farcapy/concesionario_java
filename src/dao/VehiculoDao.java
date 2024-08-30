@@ -149,30 +149,53 @@ public class VehiculoDao {
 
     public void guardar(Vehiculo v) {
         if (StringUtils.isEmptyOrWhitespaceOnly(v.getId_vehiculo())) {
+            // Si no se proporciona un ID, genera uno nuevo
+            v.setId_vehiculo(String.valueOf(obtenerUltimoID()));
             agregar(v);
         } else {
-            actualizar(v);
+            // Verificar si el ID ya existe en la base de datos
+            if (existeIdVehiculo(v.getId_vehiculo())) {
+                actualizar(v);
+            } else {
+                agregar(v);
+            }
         }
     }
-    
+
     public int obtenerUltimoID() {
-    int ultimoID = 0;
-    String query = "SELECT MAX(id_vehiculo) FROM vehiculos"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.
+        int ultimoID = 0;
+        String query = "SELECT MAX(id_vehiculo) FROM vehiculos"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.
 
-    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario_test", "root", "root1234");
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(query)) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario_test", "root", "root1234");
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
 
-        if (rs.next()) {
-            ultimoID = rs.getInt(1); // Obtén el último ID
+            if (rs.next()) {
+                ultimoID = rs.getInt(1); // Obtén el último ID
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return ultimoID + 1; // Devuelve el siguiente ID
     }
 
-    return ultimoID + 1; // Devuelve el siguiente ID
-}       
+    private boolean existeIdVehiculo(String id_vehiculo) {
+        // Realiza una consulta en la base de datos para verificar si el ID existe
+        String sql = "SELECT COUNT(*) FROM vehiculos WHERE id_vehiculo = ?";
+        try (Connection conexion = connBD.connMySQL();
+                PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setString(1, id_vehiculo);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 //    public static void main(String[] args) {
 //        VehiculoDao dao = new VehiculoDao();
 //        int cantidad = dao.probarConexion();
