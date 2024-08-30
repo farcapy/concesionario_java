@@ -20,7 +20,7 @@ Dicho proyecto, es una aplicación básica de gestión para concesionarios de ve
 
 *git clone https://github.com/farcapy/concesionario_java*
 
-*cd proyecto-concesionario*
+*cd concesionario_java*
 
 **2. Configuración de la base de datos:**
 
