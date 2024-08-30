@@ -18,7 +18,7 @@ Dicho proyecto, es una aplicación básica de gestión para concesionarios de ve
 ## Instalación
 **1. Clonar el repositorio:**
 
-*git clone https://github.com/fredyarca15/concesionario_java*
+*git clone https://github.com/farcapy/concesionario_java*
 
 *cd proyecto-concesionario*
 
