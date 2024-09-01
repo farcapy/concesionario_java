@@ -18,9 +18,9 @@ Dicho proyecto, es una aplicación básica de gestión para concesionarios de ve
 ## Instalación
 **1. Clonar el repositorio:**
 
-*git clone https://github.com/fredyarca15/concesionario_java*
+*git clone https://github.com/farcapy/concesionario_java*
 
-*cd proyecto-concesionario*
+*cd concesionario_java*
 
 **2. Configuración de la base de datos:**
 
@@ -62,4 +62,8 @@ Dicho proyecto, es una aplicación básica de gestión para concesionarios de ve
 - config.properties: Archivo de configuración para las credenciales de la base de datos.
 ## Contacto
 Si tienes alguna pregunta o sugerencia, puedes contactar a través de:
+<<<<<<< HEAD
 - Email: fredyarcawpy@gmail.com
+=======
+- Email: fredyarcawpy@gmail.com
+>>>>>>> f6af89c6ceba775173f589cd531767dcd6808d73
