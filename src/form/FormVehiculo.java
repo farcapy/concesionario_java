@@ -16,7 +16,6 @@ public class FormVehiculo extends javax.swing.JFrame {
 
     VehiculoDao vehiculoDao = new VehiculoDao();
     private List<Vehiculo> lista = new ArrayList();
-    public String operador = "";
 
     public FormVehiculo() {
         initComponents();
@@ -457,7 +456,6 @@ public class FormVehiculo extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         habilitarCampos();
-        operador = "editar";
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -502,7 +500,6 @@ public class FormVehiculo extends javax.swing.JFrame {
         deshabilitarBotones();
         habilitarCampos();
         this.txtMatricula.requestFocus();
-        this.lbId.setText(operador);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
