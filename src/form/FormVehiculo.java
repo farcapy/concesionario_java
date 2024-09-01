@@ -469,18 +469,18 @@ public class FormVehiculo extends javax.swing.JFrame {
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         Vehiculo v = new Vehiculo();
         v.setId_vehiculo(lbId.getText());
-        v.setMatricula(txtMatricula.getText());
-        v.setMarca(txtMarca.getText());
-        v.setModelo(txtModelo.getText());
+        v.setMatricula(txtMatricula.getText().toUpperCase().trim());
+        v.setMarca(txtMarca.getText().toUpperCase().trim());
+        v.setModelo(txtModelo.getText().toUpperCase().trim());
         v.setYear_fab(txtYear.getText());
         v.setPrecio(txtPrecio.getText());
-        v.setColor(txtColor.getText());
+        v.setColor(txtColor.getText().toUpperCase().trim());
         v.setTipo_motor((String) cbMotor.getSelectedItem());
         v.setTransmision((String) cbTransmision.getSelectedItem());
         v.setKm(txtKm.getText());
         v.setUbicacion((String) cbUbicacion.getSelectedItem());
         v.setEstado((String) cbEstado.getSelectedItem());
-        v.setDescripcion(txtDescri.getText());
+        v.setDescripcion(txtDescri.getText().toUpperCase().trim());
 
         vehiculoDao.guardar(v);
 

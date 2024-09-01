@@ -1,6 +1,9 @@
 package form;
 
 import conn.Conexion;
+import java.awt.event.KeyEvent;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +24,7 @@ public class BuscarCiudad extends javax.swing.JDialog {
     public BuscarCiudad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Buscar ciudad");
         m = (javax.swing.table.DefaultTableModel) tbCiudades.getModel();
         this.setLocationRelativeTo(null);
         carga_grilla();
@@ -41,7 +45,6 @@ public class BuscarCiudad extends javax.swing.JDialog {
         tbCiudades = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtNombreCiudad = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,15 +54,23 @@ public class BuscarCiudad extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Código", "Nombre"
+                "Código", "Ciudad", "Departamento"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbCiudades.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbCiudadesKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tbCiudadesKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(tbCiudades);
@@ -83,24 +94,22 @@ public class BuscarCiudad extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNombreCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addComponent(txtNombreCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(43, 43, 43)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombreCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -117,33 +126,24 @@ public class BuscarCiudad extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel1.setText("BUSCAR CIUDAD");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(182, 182, 182))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap(0, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -154,6 +154,17 @@ public class BuscarCiudad extends javax.swing.JDialog {
     private void txtNombreCiudadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCiudadKeyTyped
         filtrar_grilla();
     }//GEN-LAST:event_txtNombreCiudadKeyTyped
+
+    private void tbCiudadesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbCiudadesKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbCiudadesKeyTyped
+
+    private void tbCiudadesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbCiudadesKeyPressed
+        eligio();
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            dispose();
+        }
+    }//GEN-LAST:event_tbCiudadesKeyPressed
 
     /**
      * @param args the command line arguments
@@ -198,7 +209,6 @@ public class BuscarCiudad extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -206,42 +216,27 @@ public class BuscarCiudad extends javax.swing.JDialog {
     private javax.swing.JTable tbCiudades;
     private javax.swing.JTextField txtNombreCiudad;
     // End of variables declaration//GEN-END:variables
-//void carga_grilla() {
-//        try {
-//            connBD.st = (Statement) connBD.connMySQL().createStatement();
-//            connBD.re = (ResultSet) connBD.st.executeQuery("SELECT * FROM ciudad ORDER BY id_ciudad");
-//
-//            if (connBD.re.next()) {
-//                do {
-//                    System.out.println("connBD.connMySQL(): " + connBD.connMySQL());
-//                    System.out.println("connBD.st: " + connBD.st);
-//                    System.out.println("m: " + m);
-//                    m.addRow(new Object[]{connBD.re.getInt("id_ciudad"), connBD.re.getString("nombre")});
-//                } while (connBD.re.next());
-//            }
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al cargar los datos", "Verifíquelo", JOptionPane.INFORMATION_MESSAGE);
-//            dispose();
-//        }
-//    }
+
     void carga_grilla() {
         try {
             // Inicializa el modelo de tabla si aún no está inicializado
             if (m == null) {
                 m = new DefaultTableModel();
-                m.setColumnIdentifiers(new Object[]{"ID Ciudad", "Nombre"});
+                m.setColumnIdentifiers(new Object[]{"ID Ciudad", "Nombre", "Depto"});
             }
 
             // Limpia el modelo de la tabla antes de cargar nuevos datos
             m.setRowCount(0);
 
             connBD.st = connBD.connMySQL().createStatement();
-            connBD.re = connBD.st.executeQuery("SELECT * FROM ciudad ORDER BY id_ciudad");
+            connBD.re = connBD.st.executeQuery("SELECT ciudad.id_ciudad, ciudad.ciu_nombre, departamentos.dep_nombre FROM ciudad "
+                    + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto");
 
             while (connBD.re.next()) {
-                m.addRow(new Object[]{connBD.re.getInt("id_ciudad"), connBD.re.getString("nombre")});
+                m.addRow(new Object[]{connBD.re.getInt("id_ciudad"), connBD.re.getString("ciu_nombre"), connBD.re.getString("dep_nombre")});
             }
         } catch (SQLException e) {
+            //e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al cargar los datos", "Verifíquelo", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         }
@@ -251,11 +246,14 @@ public class BuscarCiudad extends javax.swing.JDialog {
         m.setRowCount(0);
         try {
             connBD.st = (Statement) connBD.connMySQL().createStatement();
-            connBD.re = (ResultSet) connBD.st.executeQuery("SELECT * FROM ciudad WHERE nombre LIKE '%" + txtNombreCiudad.getText() + "%'");
+            //connBD.re = (ResultSet) connBD.st.executeQuery("SELECT * FROM ciudad WHERE ciu_nombre LIKE '%" + txtNombreCiudad.getText() + "%'");
+            connBD.re = connBD.st.executeQuery("SELECT ciudad.id_ciudad, ciudad.ciu_nombre, departamentos.dep_nombre FROM ciudad "
+                    + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto "
+                    + "WHERE ciu_nombre LIKE '%" + txtNombreCiudad.getText().toUpperCase().trim() + "%'");
 
             if (connBD.re.next()) {
                 do {
-                    m.addRow(new Object[]{connBD.re.getInt("id_ciudad"), connBD.re.getString("nombre")});
+                    m.addRow(new Object[]{connBD.re.getInt("id_ciudad"), connBD.re.getString("ciu_nombre"), connBD.re.getString("dep_nombre")});
                 } while (connBD.re.next());
             }
         } catch (SQLException e) {
