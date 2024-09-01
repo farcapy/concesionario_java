@@ -24,6 +24,8 @@ public class Conexion {
     public String username = "root";
     //Password
     public String password = "root1234";
+    public Statement st;
+    public ResultSet re;
 
     public Connection connMySQL() {
         Connection conn = null;
