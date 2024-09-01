@@ -24,6 +24,7 @@ public class FormCliente extends javax.swing.JFrame {
     Conexion connBD = new Conexion();
     ClienteDao clienteDao = new ClienteDao();
     BuscarCiudad bCiudad = new BuscarCiudad(this, true);
+    BuscarCliente bCliente = new BuscarCliente(this, true);
 
     public FormCliente() {
         initComponents();
@@ -506,7 +507,14 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-
+        bCliente.setVisible(true);
+        String valorID1 = bCliente.valorID;
+        if (valorID1.isEmpty()) {//no trae nada
+            return;
+        } else {//trae datos
+            this.lbIdCliente.setText(valorID1);
+            buscarCiudad();
+        }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -599,22 +607,6 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
-//    void buscarCiudad() {
-//        try {
-//            connBD.st = (Statement) connBD.connMySQL().createStatement();
-//            connBD.re = (ResultSet) connBD.st.executeQuery(""
-//                    + "SELECT * FROM ciudad WHERE id_ciudad = " + lbIdCiudad.getText());
-//            boolean encontro = connBD.re.next();
-//            if (encontro == true)//encontró
-//            {
-//                this.txtCiudad.setText(connBD.re.getString("ciu_nombre"));
-//            }
-//        } catch (SQLException exceptionSql) {
-//            JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
-//                    "Error de conexión con la base de datos", JOptionPane.ERROR_MESSAGE);
-//            System.exit(0);
-//        }
-//    }
     void buscarCiudad() {
         try {
             connBD.st = (Statement) connBD.connMySQL().createStatement();
@@ -633,6 +625,50 @@ public class FormCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
                     "Error de conexión con la base de datos", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
+        }
+    }
+
+    void buscarCliente() {
+        try {
+            connBD.st = (Statement) connBD.connMySQL().createStatement();
+            connBD.re = (ResultSet) connBD.st.executeQuery("SELECT "
+                    + "    clientes.id_cliente, "
+                    + "    clientes.ruc, "
+                    + "    clientes.ci, "
+                    + "    clientes.nombre, "
+                    + "    clientes.apellido, "
+                    + "    departamentos.id_depto, "
+                    + "    departamentos.dep_nombre, "
+                    + "    ciudad.id_ciudad, "
+                    + "    ciudad.ciu_nombre, "
+                    + "    clientes.direccion, "
+                    + "    clientes.telefono, "
+                    + "    clientes.celular, "
+                    + "    clientes.email "
+                    + "FROM clientes "
+                    + "JOIN ciudad ON clientes.id_ciudad = ciudad.id_ciudad "
+                    + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto "
+                    + "WHERE id_cliente = " + lbIdCliente.getText());
+            boolean encontro = connBD.re.next();
+            if (encontro == true)//encontró
+            {
+                this.txtRuc.setText(connBD.re.getString("ruc"));
+                this.txtCi.setText(connBD.re.getString("ci"));
+                this.txtNombre.setText(connBD.re.getString("nombre"));
+                this.txtApellido.setText(connBD.re.getString("apellido"));
+                this.txtDireccion.setText(connBD.re.getString("direccion"));
+                this.txtTelefono.setText(connBD.re.getString("telefono"));
+                this.txtCelular.setText(connBD.re.getString("celular"));
+                this.txtEmail.setText(connBD.re.getString("email"));
+                this.lbIdDepto.setText(connBD.re.getString("id_depto"));
+                this.txtDepto.setText(connBD.re.getString("dep_nombre"));
+                this.lbIdCiudad.setText(connBD.re.getString("id_ciudad"));
+                this.txtCiudad.setText(connBD.re.getString("ciu_nombre"));
+            }
+        } catch (SQLException exceptionSql) {
+            JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
+                    "Error de conexión con la base de datos", JOptionPane.ERROR_MESSAGE);
+            //System.exit(0);
         }
     }
 
