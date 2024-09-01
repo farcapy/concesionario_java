@@ -38,11 +38,11 @@ public class ClienteDao {
         }
         return cantidadVehiculos;
     }
-    
+
     public void agregar(Cliente c) {
         String sql = "INSERT INTO `clientes` (`id_ciudad`, `id_depto`, `ruc`, "
-                + "`ci`, `nombre`, `apellido`, `direccion`, `telefono`, `celular`)"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                + "`ci`, `nombre`, `apellido`, `direccion`, `telefono`, `celular`, `email`)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conexion = connBD.connMySQL();
                 PreparedStatement statement = conexion.prepareStatement(sql)) {
@@ -56,6 +56,7 @@ public class ClienteDao {
             statement.setString(7, c.getDireccion());
             statement.setString(8, c.getTelefono());
             statement.setString(9, c.getCelular());
+            statement.setString(10, c.getEmail());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -65,7 +66,7 @@ public class ClienteDao {
             Logger.getLogger(VehiculoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void actualizar(Cliente c) {
         String sql = "UPDATE `concesionario_test`.`clientes` "
                 + "SET `id_ciudad` = ?,`id_depto` = ?, `ruc` = ?, `ci` = ?, `nombre` = ?, "
@@ -98,7 +99,7 @@ public class ClienteDao {
             Logger.getLogger(VehiculoDao.class.getName()).log(Level.SEVERE, "Error en la conversión de tipo de dato", ex);
         }
     }
-    
+
     public void guardar(Cliente c) {
         if (StringUtils.isEmptyOrWhitespaceOnly(c.getId_cliente())) {
             // Si no se proporciona un ID, genera uno nuevo
@@ -113,7 +114,7 @@ public class ClienteDao {
             }
         }
     }
-    
+
     public void eliminarCliente(String id) {
         try {
             Statement statement = null;
@@ -126,7 +127,7 @@ public class ClienteDao {
             Logger.getLogger(VehiculoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public int obtenerUltimoID() {
         int ultimoID = 0;
         String query = "SELECT MAX(id_cliente) FROM clientes"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.

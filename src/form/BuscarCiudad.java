@@ -17,8 +17,8 @@ import javax.swing.table.DefaultTableModel;
 public class BuscarCiudad extends javax.swing.JDialog {
 
     Conexion connBD = new Conexion();
-    private int posRegistro = 0; //posición de registro
-    static String valorCodigo = ""; //valor de código
+    private int posiRegistro = 0; //posición de registro
+    static String valorID = ""; //valor de código
     javax.swing.table.DefaultTableModel m;//crear un modelo de tabla
 
     public BuscarCiudad(java.awt.Frame parent, boolean modal) {
@@ -77,10 +77,11 @@ public class BuscarCiudad extends javax.swing.JDialog {
         if (tbCiudades.getColumnModel().getColumnCount() > 0) {
             tbCiudades.getColumnModel().getColumn(0).setMinWidth(100);
             tbCiudades.getColumnModel().getColumn(0).setMaxWidth(100);
+            tbCiudades.getColumnModel().getColumn(1).setMinWidth(170);
         }
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Nombre:");
+        jLabel2.setText("Ciudad:");
 
         txtNombreCiudad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNombreCiudad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -94,13 +95,16 @@ public class BuscarCiudad extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNombreCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombreCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,7 +125,7 @@ public class BuscarCiudad extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,12 +142,12 @@ public class BuscarCiudad extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -263,7 +267,7 @@ public class BuscarCiudad extends javax.swing.JDialog {
     }
 
     void eligio() {
-        posRegistro = tbCiudades.getSelectedRow();
-        valorCodigo = (String.valueOf(this.tbCiudades.getValueAt(posRegistro, 0)));
+        posiRegistro = tbCiudades.getSelectedRow();
+        valorID = (String.valueOf(this.tbCiudades.getValueAt(posiRegistro, 0)));
     }
 }
