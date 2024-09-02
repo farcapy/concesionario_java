@@ -141,6 +141,9 @@ public class BuscarCliente extends javax.swing.JDialog {
     private void tbClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbClientesKeyTyped
         eligio();
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            m.setRowCount(0);
+            txtNombreCliente.setText("");
+            carga_grilla();
             dispose();
         }
     }//GEN-LAST:event_tbClientesKeyTyped
@@ -209,7 +212,7 @@ public class BuscarCliente extends javax.swing.JDialog {
             connBD.re = connBD.st.executeQuery("SELECT * FROM clientes ORDER BY id_cliente");
 
             while (connBD.re.next()) {
-                m.addRow(new Object[]{connBD.re.getInt("id_cliente"), connBD.re.getString("ruc"), connBD.re.getString("ci"),
+                m.addRow(new Object[]{connBD.re.getInt("id_cliente"), connBD.re.getString("ci"), connBD.re.getString("ruc"),
                     connBD.re.getString("nombre"), connBD.re.getString("apellido")});
             }
         } catch (SQLException e) {
@@ -227,7 +230,7 @@ public class BuscarCliente extends javax.swing.JDialog {
 
             if (connBD.re.next()) {
                 do {
-                    m.addRow(new Object[]{connBD.re.getInt("id_cliente"), connBD.re.getString("ruc"), connBD.re.getString("ci"),
+                    m.addRow(new Object[]{connBD.re.getInt("id_cliente"), connBD.re.getString("ci"), connBD.re.getString("ruc"),
                         connBD.re.getString("nombre"), connBD.re.getString("apellido")});
                 } while (connBD.re.next());
             }

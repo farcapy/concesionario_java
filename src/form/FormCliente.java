@@ -9,6 +9,7 @@ import conn.Conexion;
 import dao.ClienteDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -440,24 +441,28 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRucActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-//        int mensaje = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este registro?", "Confirmar", JOptionPane.YES_NO_OPTION);
-//
-//        if (mensaje == JOptionPane.YES_OPTION) {
-//            int indice = this.listVehiculos.getSelectedIndex();
-//            if (indice != -1) {
-//                try {
-//                    Vehiculo v = lista.get(indice);
-//                    vehiculoDao.eliminarVehiculo(v.getId_vehiculo());
-//                    actualizarLista();
-//                    limpiarCampos();
-//                    JOptionPane.showMessageDialog(null, "El registro ha sido eliminado con éxito", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-//                } catch (Exception e) {
-//                    JOptionPane.showMessageDialog(this, "Ocurrió un error al eliminar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Seleccione un vehículo para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
+        try{
+            int mensaje = JOptionPane.showConfirmDialog(this, 
+                    "Desea borrar --> "+lbIdCliente.getText(),"Confirmar",JOptionPane.YES_NO_OPTION);
+            if(mensaje == JOptionPane.YES_NO_OPTION) //Si quieres borrar
+            {
+                connBD.st = (Statement) connBD.connMySQL().createStatement();
+                connBD.st.executeUpdate("DELETE FROM clientes WHERE id_cliente = "+lbIdCliente.getText());
+                JOptionPane.showMessageDialog(null, 
+                        "El registro ha sido borrado con éxito","Aviso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, 
+                        "Operación cancelada","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            }
+            habilitarBotones();
+            deshabilitarCampos();
+            limpiarCampos();
+        }catch(SQLException exceptionSql){
+            JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
+                    "Error de conexión con la base de datos",JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -513,8 +518,9 @@ public class FormCliente extends javax.swing.JFrame {
             return;
         } else {//trae datos
             this.lbIdCliente.setText(valorID1);
-            buscarCiudad();
+            buscarCliente();
         }
+        habilitarBotones();
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -609,17 +615,20 @@ public class FormCliente extends javax.swing.JFrame {
 
     void buscarCiudad() {
         try {
-            connBD.st = (Statement) connBD.connMySQL().createStatement();
-            connBD.re = (ResultSet) connBD.st.executeQuery("SELECT departamentos.id_depto, departamentos.dep_nombre, "
+            String query = "SELECT departamentos.id_depto, departamentos.dep_nombre, "
                     + "ciudad.id_ciudad, ciudad.ciu_nombre FROM ciudad "
                     + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto "
-                    + "WHERE id_ciudad = " + lbIdCiudad.getText());
-            boolean encontro = connBD.re.next();
-            if (encontro == true)//encontró
-            {
-                this.txtCiudad.setText(connBD.re.getString("ciu_nombre"));
-                this.lbIdDepto.setText(connBD.re.getString("id_depto"));
-                this.txtDepto.setText(connBD.re.getString("dep_nombre"));
+                    + "WHERE id_ciudad = ?";
+
+            PreparedStatement pst = connBD.connMySQL().prepareStatement(query);
+            pst.setString(1, lbIdCiudad.getText());  // Si es numérico, usa pst.setInt(1, Integer.parseInt(lbIdCiudad.getText()));
+
+            ResultSet rs = pst.executeQuery();
+            boolean encontro = rs.next();
+            if (encontro) { // Si encontró la ciudad
+                this.txtCiudad.setText(rs.getString("ciu_nombre"));
+                this.lbIdDepto.setText(rs.getString("id_depto"));
+                this.txtDepto.setText(rs.getString("dep_nombre"));
             }
         } catch (SQLException exceptionSql) {
             JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
@@ -630,45 +639,54 @@ public class FormCliente extends javax.swing.JFrame {
 
     void buscarCliente() {
         try {
-            connBD.st = (Statement) connBD.connMySQL().createStatement();
-            connBD.re = (ResultSet) connBD.st.executeQuery("SELECT "
-                    + "    clientes.id_cliente, "
-                    + "    clientes.ruc, "
-                    + "    clientes.ci, "
-                    + "    clientes.nombre, "
-                    + "    clientes.apellido, "
-                    + "    departamentos.id_depto, "
-                    + "    departamentos.dep_nombre, "
-                    + "    ciudad.id_ciudad, "
-                    + "    ciudad.ciu_nombre, "
-                    + "    clientes.direccion, "
-                    + "    clientes.telefono, "
-                    + "    clientes.celular, "
-                    + "    clientes.email "
+            String query = "SELECT clientes.ruc, "
+                    + "clientes.ci, "
+                    + "clientes.nombre, "
+                    + "clientes.apellido, "
+                    + "clientes.direccion, "
+                    + "clientes.telefono, "
+                    + "clientes.celular, "
+                    + "clientes.email, "
+                    + "departamentos.id_depto, "
+                    + "departamentos.dep_nombre, "
+                    + "ciudad.id_ciudad, "
+                    + "ciudad.ciu_nombre "
                     + "FROM clientes "
                     + "JOIN ciudad ON clientes.id_ciudad = ciudad.id_ciudad "
                     + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto "
-                    + "WHERE id_cliente = " + lbIdCliente.getText());
-            boolean encontro = connBD.re.next();
-            if (encontro == true)//encontró
-            {
-                this.txtRuc.setText(connBD.re.getString("ruc"));
-                this.txtCi.setText(connBD.re.getString("ci"));
-                this.txtNombre.setText(connBD.re.getString("nombre"));
-                this.txtApellido.setText(connBD.re.getString("apellido"));
-                this.txtDireccion.setText(connBD.re.getString("direccion"));
-                this.txtTelefono.setText(connBD.re.getString("telefono"));
-                this.txtCelular.setText(connBD.re.getString("celular"));
-                this.txtEmail.setText(connBD.re.getString("email"));
-                this.lbIdDepto.setText(connBD.re.getString("id_depto"));
-                this.txtDepto.setText(connBD.re.getString("dep_nombre"));
-                this.lbIdCiudad.setText(connBD.re.getString("id_ciudad"));
-                this.txtCiudad.setText(connBD.re.getString("ciu_nombre"));
+                    + "WHERE id_cliente = ?";
+
+            PreparedStatement pst = connBD.connMySQL().prepareStatement(query);
+            pst.setString(1, lbIdCliente.getText());  // Asegúrate de que lbIdCliente es numérico
+
+            //System.out.println("Ejecutando consulta: " + pst.toString());
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) { // Si encontró al cliente
+//                System.out.println("Cliente encontrado:");
+//                System.out.println("RUC: " + rs.getString("ruc"));
+//                System.out.println("Nombre: " + rs.getString("nombre"));
+
+                this.txtRuc.setText(rs.getString("clientes.ruc"));
+                this.txtCi.setText(rs.getString("ci"));
+                this.txtNombre.setText(rs.getString("nombre"));
+                this.txtApellido.setText(rs.getString("apellido"));
+                this.txtDireccion.setText(rs.getString("direccion"));
+                this.txtTelefono.setText(rs.getString("telefono"));
+                this.txtCelular.setText(rs.getString("celular"));
+                this.txtEmail.setText(rs.getString("email"));
+                this.lbIdDepto.setText(rs.getString("id_depto"));
+                this.txtDepto.setText(rs.getString("dep_nombre"));
+                this.lbIdCiudad.setText(rs.getString("id_ciudad"));
+                this.txtCiudad.setText(rs.getString("ciu_nombre"));
+            } else {
+                System.out.println("Cliente no encontrado.");
             }
         } catch (SQLException exceptionSql) {
             JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
                     "Error de conexión con la base de datos", JOptionPane.ERROR_MESSAGE);
-            //System.exit(0);
+            exceptionSql.printStackTrace();
+            System.exit(0);
         }
     }
 

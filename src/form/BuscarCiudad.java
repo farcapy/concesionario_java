@@ -166,6 +166,9 @@ public class BuscarCiudad extends javax.swing.JDialog {
     private void tbCiudadesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbCiudadesKeyPressed
         eligio();
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            m.setRowCount(0);
+            txtNombreCiudad.setText("");
+            carga_grilla();
             dispose();
         }
     }//GEN-LAST:event_tbCiudadesKeyPressed
