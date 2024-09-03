@@ -8,11 +8,14 @@ package form;
 import conn.Conexion;
 import static form.BuscarCiudad.valorID;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Vehiculo;
 
 /**
  *
@@ -50,6 +53,11 @@ public class BuscarCliente extends javax.swing.JDialog {
         txtNombreCliente = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,10 +151,14 @@ public class BuscarCliente extends javax.swing.JDialog {
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
             m.setRowCount(0);
             txtNombreCliente.setText("");
-            carga_grilla();
+            //carga_grilla();
             dispose();
         }
     }//GEN-LAST:event_tbClientesKeyTyped
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        carga_grilla();
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
@@ -243,5 +255,6 @@ public class BuscarCliente extends javax.swing.JDialog {
     void eligio() {
         posiRegistro = tbClientes.getSelectedRow();
         valorID = (String.valueOf(this.tbClientes.getValueAt(posiRegistro, 0)));
+        System.out.println(valorID);
     }
 }

@@ -9,6 +9,8 @@ import conn.Conexion;
 import dao.ClienteDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +41,7 @@ public class FormCliente extends javax.swing.JFrame {
         this.txtDepto.setEnabled(false);
         btnBuscarCiudad.setFocusable(false);
         btnBuscarCliente.setFocusable(false);
-        btnCancelar.setFocusable(false);
+        btnLimpiar.setFocusable(false);
         btnCargar.setFocusable(false);
         btnEditar.setFocusable(false);
         btnEliminar.setFocusable(false);
@@ -57,7 +59,6 @@ public class FormCliente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        lbIdCliente = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -83,10 +84,11 @@ public class FormCliente extends javax.swing.JFrame {
         lbIdDepto = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         lbIdCiudad = new javax.swing.JLabel();
+        lbIdCliente = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnEliminar = new java.awt.Button();
-        btnCancelar = new java.awt.Button();
+        btnLimpiar = new java.awt.Button();
         btnCargar = new java.awt.Button();
         btnEditar = new java.awt.Button();
         btnNuevo = new java.awt.Button();
@@ -97,9 +99,6 @@ public class FormCliente extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel2.setText("ID:");
-
-        lbIdCliente.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbIdCliente.setText("N/A");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel3.setText("RUC:");
@@ -178,6 +177,9 @@ public class FormCliente extends javax.swing.JFrame {
         lbIdCiudad.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbIdCiudad.setText("N/A");
 
+        lbIdCliente.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbIdCliente.setText("N/A");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -242,14 +244,16 @@ public class FormCliente extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addComponent(lbIdCliente))
-                .addGap(62, 62, 62))
+                                        .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(62, 62, 62))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbIdCliente)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lbIdCliente))
@@ -316,11 +320,11 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnCancelar.setLabel("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnLimpiar.setLabel("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnLimpiarActionPerformed(evt);
             }
         });
 
@@ -364,7 +368,7 @@ public class FormCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
@@ -376,7 +380,7 @@ public class FormCliente extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnCargar, btnEditar, btnEliminar, btnNuevo, btnSalir});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCargar, btnEditar, btnEliminar, btnLimpiar, btnNuevo, btnSalir});
 
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,12 +389,14 @@ public class FormCliente extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCargar, btnEditar, btnEliminar, btnLimpiar, btnNuevo, btnSalir});
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graf/search.png"))); // NOI18N
         btnBuscarCliente.setText("Buscar");
@@ -430,7 +436,7 @@ public class FormCliente extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
@@ -465,13 +471,13 @@ public class FormCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarCampos();
         this.lbIdCliente.setText("N/A");
         deshabilitarCampos();
         deshabilitarBotones();
         btnNuevo.requestFocus();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         Cliente cliente = new Cliente();
@@ -512,9 +518,9 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        bCliente.setVisible(true);
+        bCliente.setVisible(true);        
         String valorID1 = bCliente.valorID;
-        if (valorID1.isEmpty()) {//no trae nada
+        if (valorID1 == null || valorID1.isEmpty()) {//no trae nada
             return;
         } else {//trae datos
             this.lbIdCliente.setText(valorID1);
@@ -576,10 +582,10 @@ public class FormCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCiudad;
     private javax.swing.JButton btnBuscarCliente;
-    private java.awt.Button btnCancelar;
     private java.awt.Button btnCargar;
     private java.awt.Button btnEditar;
     private java.awt.Button btnEliminar;
+    private java.awt.Button btnLimpiar;
     private java.awt.Button btnNuevo;
     private java.awt.Button btnSalir;
     private javax.swing.JLabel jLabel1;
@@ -737,5 +743,4 @@ public class FormCliente extends javax.swing.JFrame {
         this.txtCi.setText("");
         this.txtRuc.setText("");
     }
-
 }

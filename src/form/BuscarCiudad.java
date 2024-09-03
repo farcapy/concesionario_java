@@ -272,5 +272,6 @@ public class BuscarCiudad extends javax.swing.JDialog {
     void eligio() {
         posiRegistro = tbCiudades.getSelectedRow();
         valorID = (String.valueOf(this.tbCiudades.getValueAt(posiRegistro, 0)));
+        System.out.println(valorID);
     }
 }
