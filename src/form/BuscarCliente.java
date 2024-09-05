@@ -76,6 +76,9 @@ public class BuscarCliente extends javax.swing.JDialog {
             }
         });
         tbClientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbClientesKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tbClientesKeyTyped(evt);
             }
@@ -147,6 +150,14 @@ public class BuscarCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNombreClienteKeyTyped
 
     private void tbClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbClientesKeyTyped
+
+    }//GEN-LAST:event_tbClientesKeyTyped
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        carga_grilla();
+    }//GEN-LAST:event_formComponentShown
+
+    private void tbClientesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbClientesKeyPressed
         eligio();
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
             m.setRowCount(0);
@@ -154,11 +165,7 @@ public class BuscarCliente extends javax.swing.JDialog {
             //carga_grilla();
             dispose();
         }
-    }//GEN-LAST:event_tbClientesKeyTyped
-
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        carga_grilla();
-    }//GEN-LAST:event_formComponentShown
+    }//GEN-LAST:event_tbClientesKeyPressed
 
     /**
      * @param args the command line arguments
@@ -255,6 +262,6 @@ public class BuscarCliente extends javax.swing.JDialog {
     void eligio() {
         posiRegistro = tbClientes.getSelectedRow();
         valorID = (String.valueOf(this.tbClientes.getValueAt(posiRegistro, 0)));
-        System.out.println(valorID);
     }
+
 }
