@@ -37,8 +37,8 @@ public class VehiculoDao {
     }
 
     public void agregar(Vehiculo v) {
-        String sql = "INSERT INTO `vehiculos` (`matricula`, `marca`, `modelo`, "
-                + "`year_fab`, `precio`, `color`, `tipo_motor`, `transmision`, `km`, `ubicacion`, `estado`, `descripcion`)"
+        String sql = "INSERT INTO `vehiculo` (`vehi_matricula`, `vehi_marca`, `vehi_modelo`, "
+                + "`vehi_year`, `vehi_precio`, `vehi_color`, `vehi_tipo_motor`, `vehi_transmision`, `vehi_km`, `vehi_ubicacion`, `vehi_estado`, `vehi_descri`)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conexion = connBD.connMySQL();
@@ -67,11 +67,11 @@ public class VehiculoDao {
     }
 
     public void actualizar(Vehiculo v) {
-        String sql = "UPDATE `concesionario_test`.`vehiculos` "
-                + "SET `matricula` = ?,`marca` = ?, `modelo` = ?, `year_fab` = ?, `precio` = ?, "
-                + "`color` = ?, `tipo_motor` = ?, `transmision` = ?, `km` = ?, "
-                + "`ubicacion` = ?, `estado` = ?, `descripcion` = ? "
-                + "WHERE `id_vehiculo` = ?;";
+        String sql = "UPDATE `concesionario_farca`.`vehiculo` "
+                + "SET `vehi_matricula` = ?,`vehi_marca` = ?, `vehi_modelo` = ?, `vehi_year` = ?, `vehi_precio` = ?, "
+                + "`vehi_color` = ?, `vehi_tipo_motor` = ?, `vehi_transmision` = ?, `vehi_km` = ?, "
+                + "`vehi_ubicacion` = ?, `vehi_estado` = ?, `vehi_descripcion` = ? "
+                + "WHERE `vehi_id` = ?;";
 
         try (Connection conexion = connBD.connMySQL();
                 PreparedStatement statement = conexion.prepareStatement(sql)) {
@@ -108,7 +108,7 @@ public class VehiculoDao {
             Statement statement = null;
             Connection conexion = connBD.connMySQL();
             //DELETE FROM `concesionario_test`.`vehiculos` WHERE (`id_vehiculo` = '1');
-            String sql = "DELETE FROM vehiculos WHERE id_vehiculo = " + id;
+            String sql = "DELETE FROM vehiculo WHERE vehi_id = " + id;
             statement = conexion.createStatement();
             statement.execute(sql);
         } catch (SQLException ex) {
@@ -118,7 +118,7 @@ public class VehiculoDao {
 
     public List<Vehiculo> listarVehiculos() {
         List<Vehiculo> listado = new ArrayList<>();
-        String sql = "SELECT * FROM vehiculos;";
+        String sql = "SELECT * FROM vehiculo;";
 
         try (Connection conexion = connBD.connMySQL();
                 Statement statement = conexion.createStatement();
@@ -126,19 +126,19 @@ public class VehiculoDao {
 
             while (resultado.next()) {
                 Vehiculo vehiculo = new Vehiculo();
-                vehiculo.setId_vehiculo(resultado.getString("id_vehiculo"));
-                vehiculo.setMatricula(resultado.getString("matricula"));
-                vehiculo.setMarca(resultado.getString("marca"));
-                vehiculo.setModelo(resultado.getString("modelo"));
-                vehiculo.setYear_fab(resultado.getString("year_fab"));
-                vehiculo.setPrecio(resultado.getString("precio"));
-                vehiculo.setColor(resultado.getString("color"));
-                vehiculo.setTipo_motor(resultado.getString("tipo_motor"));
-                vehiculo.setTransmision(resultado.getString("transmision"));
-                vehiculo.setKm(resultado.getString("km"));
-                vehiculo.setUbicacion(resultado.getString("ubicacion"));
-                vehiculo.setEstado(resultado.getString("estado"));
-                vehiculo.setDescripcion(resultado.getString("descripcion"));
+                vehiculo.setId_vehiculo(resultado.getString("vehi_id"));
+                vehiculo.setMatricula(resultado.getString("vehi_matricula"));
+                vehiculo.setMarca(resultado.getString("vehi_marca"));
+                vehiculo.setModelo(resultado.getString("vehi_modelo"));
+                vehiculo.setYear_fab(resultado.getString("vehi_year"));
+                vehiculo.setPrecio(resultado.getString("vehi_precio"));
+                vehiculo.setColor(resultado.getString("vehi_color"));
+                vehiculo.setTipo_motor(resultado.getString("vehi_tipo_motor"));
+                vehiculo.setTransmision(resultado.getString("vehi_transmision"));
+                vehiculo.setKm(resultado.getString("vehi_km"));
+                vehiculo.setUbicacion(resultado.getString("vehi_ubicacion"));
+                vehiculo.setEstado(resultado.getString("vehi_estado"));
+                vehiculo.setDescripcion(resultado.getString("vehi_descri"));
                 listado.add(vehiculo);
             }
         } catch (SQLException e) {
@@ -164,9 +164,9 @@ public class VehiculoDao {
 
     public int obtenerUltimoID() {
         int ultimoID = 0;
-        String query = "SELECT MAX(id_vehiculo) FROM vehiculos"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.
+        String query = "SELECT MAX(vehi_id) FROM vehiculo"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario_test", "root", "root1234");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario_farca", "root", "root1234");
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -183,7 +183,7 @@ public class VehiculoDao {
 
     private boolean existeIdVehiculo(String id_vehiculo) {
         // Realiza una consulta en la base de datos para verificar si el ID existe
-        String sql = "SELECT COUNT(*) FROM vehiculos WHERE id_vehiculo = ?";
+        String sql = "SELECT COUNT(*) FROM vehiculo WHERE vehi_id = ?";
         try (Connection conexion = connBD.connMySQL();
                 PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, id_vehiculo);
@@ -196,9 +196,9 @@ public class VehiculoDao {
         }
         return false;
     }
-    public static void main(String[] args) {
-        VehiculoDao dao = new VehiculoDao();
-        int cantidad = dao.probarConexion();
-        System.out.println("Cantidad de vehículos en la base de datos: " + cantidad);
-    }    
+//    public static void main(String[] args) {
+//        VehiculoDao dao = new VehiculoDao();
+//        int cantidad = dao.probarConexion();
+//        System.out.println("Cantidad de vehículos en la base de datos: " + cantidad);
+//    }    
 }

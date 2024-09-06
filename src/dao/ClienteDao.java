@@ -24,7 +24,7 @@ public class ClienteDao {
 
     public int probarConexion() {
         int cantidadVehiculos = 0;
-        String sql = "SELECT COUNT(*) AS total FROM clientes;";
+        String sql = "SELECT COUNT(*) AS total FROM cliente;";
 
         try (Connection conexion = connBD.connMySQL();
                 Statement statement = conexion.createStatement();
@@ -40,15 +40,15 @@ public class ClienteDao {
     }
 
     public void agregar(Cliente c) {
-        String sql = "INSERT INTO `clientes` (`id_ciudad`, `id_depto`, `ruc`, "
-                + "`ci`, `nombre`, `apellido`, `direccion`, `telefono`, `celular`, `email`)"
+        String sql = "INSERT INTO `cliente` (`depto_id`, `ciu_id`, `cli_ruc`, "
+                + "`cli_ci`, `cli_nombre`, `cli_apellido`, `cli_direccion`, `cli_telefono`, `cli_celular`, `cli_email`)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conexion = connBD.connMySQL();
                 PreparedStatement statement = conexion.prepareStatement(sql)) {
 
-            statement.setString(1, c.getId_ciudad());
-            statement.setString(2, c.getId_depto());
+            statement.setString(1, c.getId_depto());
+            statement.setString(2, c.getId_ciudad());
             statement.setString(3, c.getRuc());
             statement.setString(4, c.getCi());
             statement.setString(5, c.getNombre());
@@ -68,10 +68,10 @@ public class ClienteDao {
     }
 
     public void actualizar(Cliente c) {
-        String sql = "UPDATE `concesionario_test`.`clientes` "
-                + "SET `id_ciudad` = ?,`id_depto` = ?, `ruc` = ?, `ci` = ?, `nombre` = ?, "
-                + "`apellido` = ?, `direccion` = ?, `telefono` = ?, `celular` = ?"
-                + "WHERE `id_cliente` = ?;";
+        String sql = "UPDATE `concesionario_farca`.`cliente` "
+                + "SET `depto_id` = ?,`ciu_id` = ?, `cli_ruc` = ?, `cli_ci` = ?, `cli_nombre` = ?, "
+                + "`cli_apellido` = ?, `cli_direccion` = ?, `cli_telefono` = ?, `cli_celular` = ?"
+                + "WHERE `cli_id` = ?;";
 
         try (Connection conexion = connBD.connMySQL();
                 PreparedStatement statement = conexion.prepareStatement(sql)) {
@@ -120,7 +120,7 @@ public class ClienteDao {
             Statement statement = null;
             Connection conexion = connBD.connMySQL();
             //DELETE FROM `concesionario_test`.`vehiculos` WHERE (`id_vehiculo` = '1');
-            String sql = "DELETE FROM clientes WHERE id_cliente = " + id;
+            String sql = "DELETE FROM cliente WHERE cli_id = " + id;
             statement = conexion.createStatement();
             statement.execute(sql);
         } catch (SQLException ex) {
@@ -130,9 +130,9 @@ public class ClienteDao {
 
     public int obtenerUltimoID() {
         int ultimoID = 0;
-        String query = "SELECT MAX(id_cliente) FROM clientes"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.
+        String query = "SELECT MAX(cli_id) FROM cliente"; // Suponiendo que 'id_vehiculo' es el nombre de la columna ID en tu tabla.
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario_test", "root", "root1234");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario_farca", "root", "root1234");
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -149,7 +149,7 @@ public class ClienteDao {
 
     private boolean existeIdVehiculo(String id_cliente) {
         // Realiza una consulta en la base de datos para verificar si el ID existe
-        String sql = "SELECT COUNT(*) FROM clientes WHERE id_cliente = ?";
+        String sql = "SELECT COUNT(*) FROM cliente WHERE cli_id = ?";
         try (Connection conexion = connBD.connMySQL();
                 PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, id_cliente);

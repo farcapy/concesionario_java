@@ -453,7 +453,7 @@ public class FormCliente extends javax.swing.JFrame {
             if(mensaje == JOptionPane.YES_NO_OPTION) //Si quieres borrar
             {
                 connBD.st = (Statement) connBD.connMySQL().createStatement();
-                connBD.st.executeUpdate("DELETE FROM clientes WHERE id_cliente = "+lbIdCliente.getText());
+                connBD.st.executeUpdate("DELETE FROM cliente WHERE cli_id = "+lbIdCliente.getText());
                 JOptionPane.showMessageDialog(null, 
                         "El registro ha sido borrado con éxito","Aviso",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -621,10 +621,10 @@ public class FormCliente extends javax.swing.JFrame {
 
     void buscarCiudad() {
         try {
-            String query = "SELECT departamentos.id_depto, departamentos.dep_nombre, "
-                    + "ciudad.id_ciudad, ciudad.ciu_nombre FROM ciudad "
-                    + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto "
-                    + "WHERE id_ciudad = ?";
+            String query = "SELECT departamento.depto_id, departamento.depto_nombre, "
+                    + "ciudad.ciu_id, ciudad.ciu_nombre FROM ciudad "
+                    + "JOIN departamento ON ciudad.depto_id = departamento.depto_id "
+                    + "WHERE ciu_id = ?";
 
             PreparedStatement pst = connBD.connMySQL().prepareStatement(query);
             pst.setString(1, lbIdCiudad.getText());  // Si es numérico, usa pst.setInt(1, Integer.parseInt(lbIdCiudad.getText()));
@@ -633,8 +633,8 @@ public class FormCliente extends javax.swing.JFrame {
             boolean encontro = rs.next();
             if (encontro) { // Si encontró la ciudad
                 this.txtCiudad.setText(rs.getString("ciu_nombre"));
-                this.lbIdDepto.setText(rs.getString("id_depto"));
-                this.txtDepto.setText(rs.getString("dep_nombre"));
+                this.lbIdDepto.setText(rs.getString("depto_id"));
+                this.txtDepto.setText(rs.getString("depto_nombre"));
             }
         } catch (SQLException exceptionSql) {
             JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
@@ -645,22 +645,22 @@ public class FormCliente extends javax.swing.JFrame {
 
     void buscarCliente() {
         try {
-            String query = "SELECT clientes.ruc, "
-                    + "clientes.ci, "
-                    + "clientes.nombre, "
-                    + "clientes.apellido, "
-                    + "clientes.direccion, "
-                    + "clientes.telefono, "
-                    + "clientes.celular, "
-                    + "clientes.email, "
-                    + "departamentos.id_depto, "
-                    + "departamentos.dep_nombre, "
-                    + "ciudad.id_ciudad, "
+            String query = "SELECT cliente.cli_ruc, "
+                    + "cliente.cli_ci, "
+                    + "cliente.cli_nombre, "
+                    + "cliente.cli_apellido, "
+                    + "cliente.cli_direccion, "
+                    + "cliente.cli_telefono, "
+                    + "cliente.cli_celular, "
+                    + "cliente.cli_email, "
+                    + "departamento.depto_id, "
+                    + "departamento.depto_nombre, "
+                    + "ciudad.ciu_id, "
                     + "ciudad.ciu_nombre "
-                    + "FROM clientes "
-                    + "JOIN ciudad ON clientes.id_ciudad = ciudad.id_ciudad "
-                    + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto "
-                    + "WHERE id_cliente = ?";
+                    + "FROM cliente "
+                    + "JOIN ciudad ON cliente.ciu_id = ciudad.ciu_id "
+                    + "JOIN departamento ON ciudad.depto_id = departamento.depto_id "
+                    + "WHERE cli_id = ?";
 
             PreparedStatement pst = connBD.connMySQL().prepareStatement(query);
             pst.setString(1, lbIdCliente.getText());  // Asegúrate de que lbIdCliente es numérico
@@ -673,17 +673,17 @@ public class FormCliente extends javax.swing.JFrame {
 //                System.out.println("RUC: " + rs.getString("ruc"));
 //                System.out.println("Nombre: " + rs.getString("nombre"));
 
-                this.txtRuc.setText(rs.getString("clientes.ruc"));
-                this.txtCi.setText(rs.getString("ci"));
-                this.txtNombre.setText(rs.getString("nombre"));
-                this.txtApellido.setText(rs.getString("apellido"));
-                this.txtDireccion.setText(rs.getString("direccion"));
-                this.txtTelefono.setText(rs.getString("telefono"));
-                this.txtCelular.setText(rs.getString("celular"));
-                this.txtEmail.setText(rs.getString("email"));
-                this.lbIdDepto.setText(rs.getString("id_depto"));
-                this.txtDepto.setText(rs.getString("dep_nombre"));
-                this.lbIdCiudad.setText(rs.getString("id_ciudad"));
+                this.txtRuc.setText(rs.getString("cli_ruc"));
+                this.txtCi.setText(rs.getString("cli_ci"));
+                this.txtNombre.setText(rs.getString("cli_nombre"));
+                this.txtApellido.setText(rs.getString("cli_apellido"));
+                this.txtDireccion.setText(rs.getString("cli_direccion"));
+                this.txtTelefono.setText(rs.getString("cli_telefono"));
+                this.txtCelular.setText(rs.getString("cli_celular"));
+                this.txtEmail.setText(rs.getString("cli_email"));
+                this.lbIdDepto.setText(rs.getString("depto_id"));
+                this.txtDepto.setText(rs.getString("depto_nombre"));
+                this.lbIdCiudad.setText(rs.getString("ciu_id"));
                 this.txtCiudad.setText(rs.getString("ciu_nombre"));
             } else {
                 System.out.println("Cliente no encontrado.");

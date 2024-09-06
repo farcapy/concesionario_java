@@ -228,11 +228,11 @@ public class BuscarCliente extends javax.swing.JDialog {
             m.setRowCount(0);
 
             connBD.st = connBD.connMySQL().createStatement();
-            connBD.re = connBD.st.executeQuery("SELECT * FROM clientes ORDER BY id_cliente");
+            connBD.re = connBD.st.executeQuery("SELECT * FROM cliente ORDER BY cli_id");
 
             while (connBD.re.next()) {
-                m.addRow(new Object[]{connBD.re.getInt("id_cliente"), connBD.re.getString("ci"), connBD.re.getString("ruc"),
-                    connBD.re.getString("nombre"), connBD.re.getString("apellido")});
+                m.addRow(new Object[]{connBD.re.getInt("cli_id"), connBD.re.getString("cli_ci"), connBD.re.getString("cli_ruc"),
+                    connBD.re.getString("cli_nombre"), connBD.re.getString("cli_apellido")});
             }
         } catch (SQLException e) {
             //e.printStackTrace();
@@ -245,12 +245,12 @@ public class BuscarCliente extends javax.swing.JDialog {
         m.setRowCount(0);
         try {
             connBD.st = (Statement) connBD.connMySQL().createStatement();
-            connBD.re = (ResultSet) connBD.st.executeQuery("SELECT * FROM clientes WHERE nombre LIKE '%" + txtNombreCliente.getText() + "%'");
+            connBD.re = (ResultSet) connBD.st.executeQuery("SELECT * FROM cliente WHERE cli_nombre LIKE '%" + txtNombreCliente.getText() + "%'");
 
             if (connBD.re.next()) {
                 do {
-                    m.addRow(new Object[]{connBD.re.getInt("id_cliente"), connBD.re.getString("ci"), connBD.re.getString("ruc"),
-                        connBD.re.getString("nombre"), connBD.re.getString("apellido")});
+                    m.addRow(new Object[]{connBD.re.getInt("cli_id"), connBD.re.getString("cli_ci"), connBD.re.getString("cli_ruc"),
+                        connBD.re.getString("cli_nombre"), connBD.re.getString("cli_apellido")});
                 } while (connBD.re.next());
             }
         } catch (SQLException e) {

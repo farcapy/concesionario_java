@@ -236,11 +236,11 @@ public class BuscarCiudad extends javax.swing.JDialog {
             m.setRowCount(0);
 
             connBD.st = connBD.connMySQL().createStatement();
-            connBD.re = connBD.st.executeQuery("SELECT ciudad.id_ciudad, ciudad.ciu_nombre, departamentos.dep_nombre FROM ciudad "
-                    + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto");
+            connBD.re = connBD.st.executeQuery("SELECT ciudad.ciu_id, ciudad.ciu_nombre, departamento.depto_nombre FROM ciudad "
+                    + "JOIN departamento ON ciudad.depto_id = departamento.depto_id");
 
             while (connBD.re.next()) {
-                m.addRow(new Object[]{connBD.re.getInt("id_ciudad"), connBD.re.getString("ciu_nombre"), connBD.re.getString("dep_nombre")});
+                m.addRow(new Object[]{connBD.re.getInt("ciu_id"), connBD.re.getString("ciu_nombre"), connBD.re.getString("depto_nombre")});
             }
         } catch (SQLException e) {
             //e.printStackTrace();
@@ -254,13 +254,13 @@ public class BuscarCiudad extends javax.swing.JDialog {
         try {
             connBD.st = (Statement) connBD.connMySQL().createStatement();
             //connBD.re = (ResultSet) connBD.st.executeQuery("SELECT * FROM ciudad WHERE ciu_nombre LIKE '%" + txtNombreCiudad.getText() + "%'");
-            connBD.re = connBD.st.executeQuery("SELECT ciudad.id_ciudad, ciudad.ciu_nombre, departamentos.dep_nombre FROM ciudad "
-                    + "JOIN departamentos ON ciudad.id_depto = departamentos.id_depto "
+            connBD.re = connBD.st.executeQuery("SELECT ciudad.ciu_id, ciudad.ciu_nombre, departamento.depto_nombre FROM ciudad "
+                    + "JOIN departamento ON ciudad.depto_id = departamento.depto_id "
                     + "WHERE ciu_nombre LIKE '%" + txtNombreCiudad.getText().toUpperCase().trim() + "%'");
 
             if (connBD.re.next()) {
                 do {
-                    m.addRow(new Object[]{connBD.re.getInt("id_ciudad"), connBD.re.getString("ciu_nombre"), connBD.re.getString("dep_nombre")});
+                    m.addRow(new Object[]{connBD.re.getInt("ciu_id"), connBD.re.getString("ciu_nombre"), connBD.re.getString("depto_nombre")});
                 } while (connBD.re.next());
             }
         } catch (SQLException e) {
