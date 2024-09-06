@@ -21,7 +21,7 @@ public class VehiculoDao {
 
     public int probarConexion() {
         int cantidadVehiculos = 0;
-        String sql = "SELECT COUNT(*) AS total FROM vehiculos;";
+        String sql = "SELECT COUNT(*) AS total FROM vehiculo;";
 
         try (Connection conexion = connBD.connMySQL();
                 Statement statement = conexion.createStatement();
@@ -196,9 +196,9 @@ public class VehiculoDao {
         }
         return false;
     }
-//    public static void main(String[] args) {
-//        VehiculoDao dao = new VehiculoDao();
-//        int cantidad = dao.probarConexion();
-//        System.out.println("Cantidad de vehículos en la base de datos: " + cantidad);
-//    }    
+    public static void main(String[] args) {
+        VehiculoDao dao = new VehiculoDao();
+        int cantidad = dao.probarConexion();
+        System.out.println("Cantidad de vehículos en la base de datos: " + cantidad);
+    }    
 }
