@@ -1,16 +1,12 @@
 
-import form.FormCliente;
-import form.FormVehiculo;
+import form.Menu;
 
 
 
 public class Main {
 
     public static void main(String[] args) {
-//        FormVehiculo form = new FormVehiculo();
-//        form.show();
-        
-        FormCliente fc = new FormCliente();
-        fc.show();
+        Menu m = new Menu();
+        m.show();
     }
 }

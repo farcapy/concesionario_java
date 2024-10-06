@@ -35,7 +35,7 @@ public class FormCliente extends javax.swing.JFrame {
         deshabilitarBotones();
         setLocationRelativeTo(null);
         setTitle("Clientes");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         lbIdCiudad.requestFocus();
         this.txtCiudad.setEnabled(false);
         this.txtDepto.setEnabled(false);
@@ -447,26 +447,26 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRucActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try{
-            int mensaje = JOptionPane.showConfirmDialog(this, 
-                    "Desea borrar --> "+lbIdCliente.getText(),"Confirmar",JOptionPane.YES_NO_OPTION);
-            if(mensaje == JOptionPane.YES_NO_OPTION) //Si quieres borrar
+        try {
+            int mensaje = JOptionPane.showConfirmDialog(this,
+                    "Desea borrar --> " + lbIdCliente.getText(), "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (mensaje == JOptionPane.YES_NO_OPTION) //Si quieres borrar
             {
                 connBD.st = (Statement) connBD.connMySQL().createStatement();
-                connBD.st.executeUpdate("DELETE FROM cliente WHERE cli_id = "+lbIdCliente.getText());
-                JOptionPane.showMessageDialog(null, 
-                        "El registro ha sido borrado con éxito","Aviso",
+                connBD.st.executeUpdate("DELETE FROM cliente WHERE cli_id = " + lbIdCliente.getText());
+                JOptionPane.showMessageDialog(null,
+                        "El registro ha sido borrado con éxito", "Aviso",
                         JOptionPane.INFORMATION_MESSAGE);
-            }else{
-                JOptionPane.showMessageDialog(null, 
-                        "Operación cancelada","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Operación cancelada", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
             habilitarBotones();
             deshabilitarCampos();
             limpiarCampos();
-        }catch(SQLException exceptionSql){
+        } catch (SQLException exceptionSql) {
             JOptionPane.showMessageDialog(null, exceptionSql.getMessage(),
-                    "Error de conexión con la base de datos",JOptionPane.ERROR_MESSAGE);
+                    "Error de conexión con la base de datos", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -518,7 +518,7 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        bCliente.setVisible(true);        
+        bCliente.setVisible(true);
         String valorID1 = bCliente.valorID;
         if (valorID1 == null || valorID1.isEmpty()) {//no trae nada
             return;
@@ -530,7 +530,10 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        dispose();
+        int opc = JOptionPane.showConfirmDialog(this, "Desea cerrar este formulario?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (opc == JOptionPane.YES_OPTION) {
+            dispose();
+        }
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnBuscarCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCiudadActionPerformed
