@@ -6,16 +6,12 @@
 package form;
 
 import conn.Conexion;
-import static form.BuscarCiudad.valorID;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Vehiculo;
 
 /**
  *

@@ -9,8 +9,6 @@ import conn.Conexion;
 import dao.ClienteDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +39,7 @@ public class FormCliente extends javax.swing.JFrame {
         this.txtDepto.setEnabled(false);
         btnBuscarCiudad.setFocusable(false);
         btnBuscarCliente.setFocusable(false);
-        btnLimpiar.setFocusable(false);
+        btnCancelar.setFocusable(false);
         btnCargar.setFocusable(false);
         btnEditar.setFocusable(false);
         btnEliminar.setFocusable(false);
@@ -88,7 +86,7 @@ public class FormCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnEliminar = new java.awt.Button();
-        btnLimpiar = new java.awt.Button();
+        btnCancelar = new java.awt.Button();
         btnCargar = new java.awt.Button();
         btnEditar = new java.awt.Button();
         btnNuevo = new java.awt.Button();
@@ -320,11 +318,11 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnLimpiar.setLabel("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnCancelar.setLabel("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -368,7 +366,7 @@ public class FormCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
@@ -380,7 +378,7 @@ public class FormCliente extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCargar, btnEditar, btnEliminar, btnLimpiar, btnNuevo, btnSalir});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnCargar, btnEditar, btnEliminar, btnNuevo, btnSalir});
 
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,14 +387,14 @@ public class FormCliente extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCargar, btnEditar, btnEliminar, btnLimpiar, btnNuevo, btnSalir});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnCargar, btnEditar, btnEliminar, btnNuevo, btnSalir});
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/graf/search.png"))); // NOI18N
         btnBuscarCliente.setText("Buscar");
@@ -471,13 +469,13 @@ public class FormCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiarCampos();
         this.lbIdCliente.setText("N/A");
         deshabilitarCampos();
         deshabilitarBotones();
         btnNuevo.requestFocus();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         Cliente cliente = new Cliente();
@@ -585,10 +583,10 @@ public class FormCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCiudad;
     private javax.swing.JButton btnBuscarCliente;
+    private java.awt.Button btnCancelar;
     private java.awt.Button btnCargar;
     private java.awt.Button btnEditar;
     private java.awt.Button btnEliminar;
-    private java.awt.Button btnLimpiar;
     private java.awt.Button btnNuevo;
     private java.awt.Button btnSalir;
     private javax.swing.JLabel jLabel1;

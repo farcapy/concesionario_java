@@ -36,7 +36,9 @@ public class Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMenu1.setText("Formularios");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
+        itmVehiculo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         itmVehiculo.setText("Vehiculo");
         itmVehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -45,6 +47,7 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu1.add(itmVehiculo);
 
+        itmCliente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         itmCliente.setText("Cliente");
         itmCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,7 +68,7 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 344, Short.MAX_VALUE)
+            .addGap(0, 343, Short.MAX_VALUE)
         );
 
         pack();

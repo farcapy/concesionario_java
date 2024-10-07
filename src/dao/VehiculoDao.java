@@ -70,7 +70,7 @@ public class VehiculoDao {
         String sql = "UPDATE `concesionario_farca`.`vehiculo` "
                 + "SET `vehi_matricula` = ?,`vehi_marca` = ?, `vehi_modelo` = ?, `vehi_year` = ?, `vehi_precio` = ?, "
                 + "`vehi_color` = ?, `vehi_tipo_motor` = ?, `vehi_transmision` = ?, `vehi_km` = ?, "
-                + "`vehi_ubicacion` = ?, `vehi_estado` = ?, `vehi_descripcion` = ? "
+                + "`vehi_ubicacion` = ?, `vehi_estado` = ?, `vehi_descri` = ? "
                 + "WHERE `vehi_id` = ?;";
 
         try (Connection conexion = connBD.connMySQL();
