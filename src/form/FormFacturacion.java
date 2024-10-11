@@ -247,13 +247,13 @@ public class FormFacturacion extends javax.swing.JFrame {
         txtSubTotal.setEnabled(false);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel10.setText("SUBTOTAL:");
+        jLabel10.setText("IVA 10%:");
 
         txtIva10.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtIva10.setEnabled(false);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel11.setText("SUBTOTAL:");
+        jLabel11.setText("TOTAL:");
 
         txtTotal.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtTotal.setEnabled(false);
@@ -287,8 +287,8 @@ public class FormFacturacion extends javax.swing.JFrame {
                                 .addGap(196, 196, 196)
                                 .addComponent(jLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtIva10, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))

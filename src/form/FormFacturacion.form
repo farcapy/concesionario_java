@@ -343,8 +343,8 @@
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txtIva10" min="-2" pref="190" max="-2" attributes="0"/>
@@ -475,7 +475,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="15" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="SUBTOTAL:"/>
+            <Property name="text" type="java.lang.String" value="IVA 10%:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtIva10">
@@ -491,7 +491,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="15" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="SUBTOTAL:"/>
+            <Property name="text" type="java.lang.String" value="TOTAL:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtTotal">
