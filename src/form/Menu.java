@@ -32,6 +32,7 @@ public class Menu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         itmVehiculo = new javax.swing.JMenuItem();
         itmCliente = new javax.swing.JMenuItem();
+        itmFacturacion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +56,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(itmCliente);
+
+        itmFacturacion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        itmFacturacion.setText("Facturacion");
+        itmFacturacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmFacturacionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itmFacturacion);
 
         jMenuBar1.add(jMenu1);
 
@@ -81,6 +91,10 @@ public class Menu extends javax.swing.JFrame {
     private void itmClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmClienteActionPerformed
         new FormCliente().setVisible(true);
     }//GEN-LAST:event_itmClienteActionPerformed
+
+    private void itmFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmFacturacionActionPerformed
+        new FormFacturacion().setVisible(true);
+    }//GEN-LAST:event_itmFacturacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,6 +133,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem itmCliente;
+    private javax.swing.JMenuItem itmFacturacion;
     private javax.swing.JMenuItem itmVehiculo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
